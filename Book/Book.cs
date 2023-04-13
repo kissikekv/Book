@@ -21,17 +21,41 @@
             }
             set
             {
-                for (int i = 0; i <= 9; i++)
+                if (Author != null)
                 {
-                    if (Author.Contains(Convert.ToChar(i)))
+                    for (int i = 0; i <= 9; i++)
                     {
-                        throw new CustomException(Author);
-                    }                    
+                        if (Author.Contains(Convert.ToChar(i)))
+                        {
+                            throw new CustomException(Author);
+                        }
+                    }
+                }
+                else
+                {
+                    throw new CustomException();
                 }
                 Author = value;
             }
         }
-        public string PublishingHouse { get; set; }
+        public string PublishingHouse
+        {
+            get
+            {
+                return PublishingHouse;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    PublishingHouse = value;
+                }
+                else
+                {
+                    throw new CustomException();
+                }
+            }
+        }
         public int PublishingYear
         {
             get
@@ -40,13 +64,20 @@
             }
             set
             {
-                if (value > 2023 | value < 0)
+                if (value != null)
                 {
-                    throw new CustomException(value, 0, 2023);
+                    if (value > 2023 | value < 0)
+                    {
+                        throw new CustomException(value, 0, 2023);
+                    }
+                    else
+                    {
+                        PublishingYear = value;
+                    }
                 }
                 else
                 {
-                    PublishingYear = value;
+                    throw new CustomException();
                 }
             }
         }
@@ -58,13 +89,20 @@
             }
             set
             {
-                if (value <= 0)
+                if (value != null)
                 {
-                    throw new CustomException(value, 0);
+                    if (value <= 0)
+                    {
+                        throw new CustomException(value, 0);
+                    }
+                    else
+                    {
+                        Pages = value;
+                    }
                 }
                 else
                 {
-                    Pages = value;
+                    throw new CustomException();
                 }
             }
         }
@@ -76,13 +114,20 @@
             }
             set
             {
-                if (Cost < 0)
+                if (value != null)
                 {
-                    throw new CustomException(value, 0);
+                    if (Cost < 0)
+                    {
+                        throw new CustomException(value, 0);
+                    }
+                    else
+                    {
+                        Cost = value;
+                    }
                 }
                 else
                 {
-                    Cost = value;
+                    throw new CustomException();
                 }
             }
         }
