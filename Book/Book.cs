@@ -5,9 +5,9 @@
         private string _ISBN;
         private string _author;
         private string _publishingHouse;
-        private int? _publishingYear;
-        private int? _pages;
-        private decimal? _cost;
+        private int _publishingYear;
+        private int _pages;
+        private decimal _cost;
 
         public string ISBN
         {
@@ -68,7 +68,7 @@
         //сначала эксепшн, потом всё ок
 
         //now,  utc now
-        public int? PublishingYear
+        public int PublishingYear
         {
             get
             {
@@ -76,22 +76,15 @@
             }
             set
             {
-                if (value is null)
+                if (value > DateTime.UtcNow.Year | value < 0)
                 {
-                    throw new ArgumentNullException("value");
-                }
-                else
-                {
-                    if (value > DateTime.UtcNow.Year | value < 0)
-                    {
-                        throw new ArgumentOutOfRangeException("value");
-                    }                    
+                    throw new ArgumentOutOfRangeException("value");
                 }
                 _publishingYear = value;
             }
         }
 
-        public int? Pages
+        public int Pages
         {
             get
             {
@@ -99,22 +92,16 @@
             }
             set
             {
-                if (value is null)
+
+                if (value <= 0)
                 {
-                    throw new ArgumentNullException("value");
-                }
-                else
-                {
-                    if (value <= 0)
-                    {
-                        throw new ArgumentOutOfRangeException("value");
-                    }                    
+                    throw new ArgumentOutOfRangeException("value");
                 }
                 _pages = value;
             }
         }
 
-        public decimal? Cost
+        public decimal Cost
         {
             get
             {
@@ -122,18 +109,11 @@
             }
             set
             {
-                if (value is null)
+                if (value <= 0)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentOutOfRangeException("value");
                 }
-                else
-                {
-                    if (value <= 0)
-                    {
-                        throw new ArgumentOutOfRangeException("value");
-                    }
-                    _cost = value;
-                }
+                _cost = value;
             }
         }
     }
