@@ -9,37 +9,6 @@
         private int? _pages;
         private decimal? _cost;
 
-        static bool isValidIsbn(string isbn)
-        {
-            int n = isbn.Length;
-            if (n != 10)
-            {
-                return false;
-            }
-
-            int sum = 0;
-            for (int i = 0; i < 9; i++)
-            {
-                int digit = isbn[i] - '0';
-                if (0 > digit || 9 < digit)
-                {
-                    return false;
-                }
-                sum += (digit * (10 - i));
-            }
-
-            char last = isbn[9];
-
-            if (last != 'X' && (last < '0' || last > '9'))
-            {
-                return false;
-            }
-
-            sum += ((last == 'X') ? 10 : (last - '0'));
-
-            return (sum % 11 == 0);
-        }
-
         public string ISBN
         {
             get
@@ -48,21 +17,18 @@
             }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentNullException("value");
                 }
                 else
                 {
-                    if (!isValidIsbn(value))
+                    if (!Validation.isValidIsbn(value))
                     {
-                        throw new Exception("value");
-                    }
-                    else
-                    {
-                        _ISBN = value;
+                        throw new ArgumentException("value");
                     }
                 }
+                _ISBN = value;
             }
         }
 
@@ -74,14 +40,11 @@
             }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentNullException("value");
                 }
-                else
-                {
-                    _author = value;
-                }
+                _author = value;
             }
         }
 
@@ -93,14 +56,11 @@
             }
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentNullException("value");
                 }
-                else
-                {
-                    _publishingHouse = value;
-                }
+                _publishingHouse = value;
             }
         }
         //посмотреть встроеные эксепшены
@@ -125,12 +85,9 @@
                     if (value > DateTime.UtcNow.Year | value < 0)
                     {
                         throw new ArgumentOutOfRangeException("value");
-                    }
-                    else
-                    {
-                        _publishingYear = value;
-                    }
+                    }                    
                 }
+                _publishingYear = value;
             }
         }
 
@@ -151,12 +108,9 @@
                     if (value <= 0)
                     {
                         throw new ArgumentOutOfRangeException("value");
-                    }
-                    else
-                    {
-                        _pages = value;
-                    }
+                    }                    
                 }
+                _pages = value;
             }
         }
 
@@ -178,16 +132,9 @@
                     {
                         throw new ArgumentOutOfRangeException("value");
                     }
-                    else
-                    {
-                        _cost = value;
-                    }
+                    _cost = value;
                 }
             }
         }
     }
 }
-
-
-
-
