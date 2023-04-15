@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Book
 {
-    internal class Validation
+    internal static class Validator
     {
         public static bool isValidIsbn(string isbn)
         {
