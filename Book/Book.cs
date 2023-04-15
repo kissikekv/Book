@@ -21,14 +21,11 @@
                 {
                     throw new ArgumentNullException("value");
                 }
-                else
+                if (!Validation.isValidIsbn(value))
                 {
-                    if (!Validation.isValidIsbn(value))
-                    {
-                        throw new ArgumentException("value");
-                    }
+                    throw new ArgumentException("value");
                 }
-                _ISBN = value;
+            _ISBN = value;
             }
         }
 
