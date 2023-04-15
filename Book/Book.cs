@@ -19,11 +19,11 @@
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value), message: "Введённая строка пуста");
                 }
                 if (!Validation.isValidIsbn(value))
                 {
-                    throw new ArgumentException("value");
+                    throw new ArgumentException(nameof(value));
                 }
             _ISBN = value;
             }
@@ -39,7 +39,7 @@
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value), message: "Введённая строка пуста");
                 }
                 _author = value;
             }
@@ -55,16 +55,12 @@
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value), message: "Введённая строка пуста");
                 }
                 _publishingHouse = value;
             }
         }
-        //посмотреть встроеные эксепшены
 
-        //сначала эксепшн, потом всё ок
-
-        //now,  utc now
         public int PublishingYear
         {
             get
@@ -75,7 +71,7 @@
             {
                 if (value > DateTime.UtcNow.Year | value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value), message: "Некорректный год");
                 }
                 _publishingYear = value;
             }
@@ -89,10 +85,9 @@
             }
             set
             {
-
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value), message: "Количество страниц должно быть больше нуля");
                 }
                 _pages = value;
             }
@@ -108,7 +103,7 @@
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value), message: "Цена должна быть больше нуля");
                 }
                 _cost = value;
             }
