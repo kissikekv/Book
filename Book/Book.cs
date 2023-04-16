@@ -21,7 +21,7 @@
                 {
                     throw new ArgumentNullException(nameof(value), message: "Введённая строка пуста");
                 }
-                if (!Validation.isValidIsbn(value))
+                if (!Validator.isValidIsbn(value))
                 {
                     throw new ArgumentException(nameof(value));
                 }
@@ -107,6 +107,6 @@
                 }
                 _cost = value;
             }
-        }
+        }        
     }
 }
