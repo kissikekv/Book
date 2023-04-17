@@ -15,16 +15,14 @@
             {
                 return _ISBN;
             }
+
             set
             {
-                if (!string.IsNullOrWhiteSpace(value))
+                if (IsbnValidator.IsValidIsbn(value))
                 {
-                    throw new ArgumentNullException(nameof(value), message: "Введённая строка пуста");
+                    throw new FormatException(nameof(value));
                 }
-                if (!Validator.isValidIsbn(value))
-                {
-                    throw new ArgumentException(nameof(value));
-                }
+
             _ISBN = value;
             }
         }
@@ -35,12 +33,14 @@
             {
                 return _author;
             }
+
             set
             {
-                if (!string.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException(nameof(value), message: "Введённая строка пуста");
+                    throw new ArgumentNullException(nameof(value), message: "Field is empty");
                 }
+
                 _author = value;
             }
         }
@@ -51,12 +51,14 @@
             {
                 return _publishingHouse;
             }
+
             set
             {
-                if (!string.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentNullException(nameof(value), message: "Введённая строка пуста");
+                    throw new ArgumentNullException(nameof(value), message: "Field is empty");
                 }
+
                 _publishingHouse = value;
             }
         }
@@ -67,12 +69,14 @@
             {
                 return _publishingYear;
             }
+
             set
             {
                 if (value > DateTime.UtcNow.Year | value < 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), message: "Некорректный год");
+                    throw new ArgumentOutOfRangeException(nameof(value), message: "Incorrect year value");
                 }
+
                 _publishingYear = value;
             }
         }
@@ -83,12 +87,14 @@
             {
                 return _pages;
             }
+
             set
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), message: "Количество страниц должно быть больше нуля");
+                    throw new ArgumentOutOfRangeException(nameof(value), message: "Number of pages should be greater than zero");
                 }
+
                 _pages = value;
             }
         }
@@ -99,12 +105,14 @@
             {
                 return _cost;
             }
+
             set
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), message: "Цена должна быть больше нуля");
+                    throw new ArgumentOutOfRangeException(nameof(value), message: "Cost should be greater than zero");
                 }
+
                 _cost = value;
             }
         }        
