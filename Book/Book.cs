@@ -4,10 +4,12 @@
     {
         private string _ISBN;
         private string _author;
-        private string _publishingHouse;
+        private string _publishingHouse;  
         private int _publishingYear;
         private int _pages;
         private decimal _cost;
+
+        //конструкторс
 
         public string ISBN
         {
@@ -18,12 +20,12 @@
 
             set
             {
-                if (IsbnValidator.IsValidIsbn(value))
+                if (IsbnValidator.IsValid(value))
                 {
-                    throw new FormatException(nameof(value));
+                    throw new FormatException(message: "Invalid ISBN format");
                 }
 
-            _ISBN = value;
+                _ISBN = value;
             }
         }
 
@@ -72,7 +74,7 @@
 
             set
             {
-                if (value > DateTime.UtcNow.Year | value < 0)
+                if (value > DateTime.UtcNow.Year || value < 0)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value), message: "Incorrect year value");
                 }
@@ -108,13 +110,13 @@
 
             set
             {
-                if (value <= 0)
+                if (value <= 0.0m)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value), message: "Cost should be greater than zero");
                 }
 
                 _cost = value;
             }
-        }        
+        }
     }
 }

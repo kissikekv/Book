@@ -1,4 +1,6 @@
-﻿namespace Book
+﻿using System.Text.RegularExpressions;
+
+namespace Book
 {
     class Program
     {
@@ -17,7 +19,7 @@
             decimal cost = book.Cost;
             Console.WriteLine(cost);
 
-            book.PublishingYear = 123;
+            book.PublishingYear = 2025;
             int publishingYear = book.PublishingYear;
             Console.WriteLine(publishingYear);
 
@@ -25,9 +27,16 @@
             string publishingHouse = book.PublishingHouse;
             Console.WriteLine(publishingHouse);
 
-            book.Pages = 0;
+            book.Pages = 1;
             int pages = book.Pages;
             Console.WriteLine(pages);
+            
+            var c = new Regex("hui");
+            Console.WriteLine(book.ToString());
+
+            //ловить исключения try catch
+            //override eq, getHash, ToString
+
         }
     }
 }

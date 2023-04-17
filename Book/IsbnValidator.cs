@@ -2,7 +2,7 @@
 {
     internal static class IsbnValidator
     {
-        public static bool IsValidIsbn(string isbn)
+        public static bool IsValid(string isbn)
         {
             if (string.IsNullOrWhiteSpace(isbn))
             {
