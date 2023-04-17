@@ -1,12 +1,11 @@
-﻿using System.Text.RegularExpressions;
-
-namespace Book
+﻿namespace Book
 {
     class Program
     {
         public static void Main(string[] args)
         {
             Book book = new Book();
+
             book.Author = "some Author";
             string author = book.Author;
             Console.WriteLine(author);
@@ -29,14 +28,10 @@ namespace Book
 
             book.Pages = 1;
             int pages = book.Pages;
-            Console.WriteLine(pages);
+            Console.WriteLine(pages);         
             
-            var c = new Regex("hui");
-            Console.WriteLine(book.ToString());
-
             //ловить исключения try catch
             //override eq, getHash, ToString
-
         }
     }
 }

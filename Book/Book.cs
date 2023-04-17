@@ -4,12 +4,28 @@
     {
         private string _ISBN;
         private string _author;
-        private string _publishingHouse;  
+        private string _publishingHouse;
         private int _publishingYear;
         private int _pages;
         private decimal _cost;
 
-        //конструкторс
+        internal Book(){ }
+        
+        public Book(
+            string isbn,
+            string author,
+            string publishinghouse,
+            int publishingyear,
+            int pages,
+            decimal cost)
+        {
+            ISBN = isbn;
+            Author = author;
+            PublishingHouse = publishinghouse;
+            PublishingYear = publishingyear;
+            Pages = pages;
+            Cost = cost;
+        }
 
         public string ISBN
         {
