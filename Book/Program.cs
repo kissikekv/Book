@@ -1,4 +1,6 @@
-﻿namespace Book
+﻿using System.Data;
+
+namespace Book
 {
     class Program
     {
@@ -6,30 +8,38 @@
         {
             Book book = new Book();
 
-            book.Author = "some Author";
-            string author = book.Author;
-            Console.WriteLine(author);
-
-            book.ISBN = "978-3-16-148410-9";
-            string isbn = book.ISBN;
-            Console.WriteLine(isbn);
-
-            book.Cost = 12313M;
-            decimal cost = book.Cost;
-            Console.WriteLine(cost);
-
-            book.PublishingYear = 2025;
-            int publishingYear = book.PublishingYear;
-            Console.WriteLine(publishingYear);
-
-            book.PublishingHouse = "Charlie Hebdo";
-            string publishingHouse = book.PublishingHouse;
-            Console.WriteLine(publishingHouse);
-
-            book.Pages = 1;
-            int pages = book.Pages;
-            Console.WriteLine(pages);         
+            try
+            {
+                book.ISBN = "978-5-699-12014-7";
+                book.Author = "фывфыв";
+                book.PublishingHouse = "saaasa";
+                book.Cost = 1.0M;
+                book.PublishingYear = 100;
+                book.Pages = 123;
+            }
             
+            catch (FormatException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }          
+            
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            /*почему перед ArgumentOutOfRangeException и ArgumentNullException не может стоять 
+            ArgumentNullException????*/
             //ловить исключения try catch
             //override eq, getHash, ToString
         }

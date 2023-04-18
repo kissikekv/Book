@@ -36,7 +36,7 @@
 
             set
             {
-                if (IsbnValidator.IsValid(value))
+                if (!IsbnValidator.IsValid(value))
                 {
                     throw new FormatException(message: "Invalid ISBN format");
                 }
@@ -58,7 +58,6 @@
                 {
                     throw new ArgumentNullException(nameof(value), message: "Field is empty");
                 }
-
                 _author = value;
             }
         }

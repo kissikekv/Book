@@ -1,4 +1,6 @@
-﻿namespace Book
+﻿using System.Text.RegularExpressions;
+
+namespace Book
 {
     internal static class IsbnValidator
     {
@@ -12,37 +14,20 @@
             if (string.IsNullOrEmpty(isbn))
             {
                 throw new ArgumentException(message: "Field is empty");
-            }
+            }          
 
+            const string isbn13Pattern = "^(?:ISBN(?:-13)?:? )?(?=[0-9]{13}$|" +
+                                             "(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)97[89]" +
+                                             "[- ]?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9]$";
 
-            int n = isbn.Length;
+            var regularExpression = new Regex(isbn13Pattern);
 
-            if (n != 10)
+            if (!regularExpression.IsMatch(isbn))
             {
-                return false;
-            }
+                throw new ArgumentException("Invalid isbn format", nameof(isbn));
+            }            
 
-            int sum = 0;
-            for (int i = 0; i < 9; i++)
-            {
-                int digit = isbn[i] - '0';
-                if (0 > digit || 9 < digit)
-                {
-                    return false;
-                }
-                sum += (digit * (10 - i));
-            }
-
-            char last = isbn[9];
-
-            if (last != 'X' && (last < '0' || last > '9'))
-            {
-                return false;
-            }
-
-            sum += ((last == 'X') ? 10 : (last - '0'));
-
-            return (sum % 11 == 0);
+            return true;
         }
     }
 }
