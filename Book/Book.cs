@@ -139,5 +139,40 @@
                 " Pages: " + Pages.ToString() + 
                 " Cost: " + Cost.ToString();
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Book book &&
+                   _ISBN == book._ISBN &&
+                   _author == book._author &&
+                   _publishingHouse == book._publishingHouse &&
+                   _publishingYear == book._publishingYear &&
+                   _pages == book._pages &&
+                   _cost == book._cost &&
+                   ISBN == book.ISBN &&
+                   Author == book.Author &&
+                   PublishingHouse == book.PublishingHouse &&
+                   PublishingYear == book.PublishingYear &&
+                   Pages == book.Pages &&
+                   Cost == book.Cost;
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            hash.Add(_ISBN);
+            hash.Add(_author);
+            hash.Add(_publishingHouse);
+            hash.Add(_publishingYear);
+            hash.Add(_pages);
+            hash.Add(_cost);
+            hash.Add(ISBN);
+            hash.Add(Author);
+            hash.Add(PublishingHouse);
+            hash.Add(PublishingYear);
+            hash.Add(Pages);
+            hash.Add(Cost);
+            return hash.ToHashCode();
+        }
     }
 }
