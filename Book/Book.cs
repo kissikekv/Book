@@ -7,9 +7,7 @@
         private string _publishingHouse;
         private int _publishingYear;
         private int _pages;
-        private decimal _cost;
-
-        internal Book(){ }
+        private decimal _cost;              
         
         public Book(
             string isbn,
@@ -141,14 +139,8 @@
         }
 
         public override bool Equals(object? obj)
-        {
-            return obj is Book book &&
-                   _ISBN == book._ISBN &&
-                   _author == book._author &&
-                   _publishingHouse == book._publishingHouse &&
-                   _publishingYear == book._publishingYear &&
-                   _pages == book._pages &&
-                   _cost == book._cost &&
+        { 
+            return obj is Book book &&                   
                    ISBN == book.ISBN &&
                    Author == book.Author &&
                    PublishingHouse == book.PublishingHouse &&
@@ -159,13 +151,7 @@
 
         public override int GetHashCode()
         {
-            HashCode hash = new HashCode();
-            hash.Add(_ISBN);
-            hash.Add(_author);
-            hash.Add(_publishingHouse);
-            hash.Add(_publishingYear);
-            hash.Add(_pages);
-            hash.Add(_cost);
+            HashCode hash = new HashCode();            
             hash.Add(ISBN);
             hash.Add(Author);
             hash.Add(PublishingHouse);
