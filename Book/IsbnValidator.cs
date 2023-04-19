@@ -4,7 +4,7 @@ namespace Book
 {
     internal static class IsbnValidator
     {
-        public static bool IsValid(string isbn)
+        public static void Validate(string isbn)
         {
             if (string.IsNullOrWhiteSpace(isbn))
             {
@@ -25,9 +25,7 @@ namespace Book
             if (!regularExpression.IsMatch(isbn))
             {
                 throw new ArgumentException("Invalid isbn format", nameof(isbn));
-            }            
-
-            return true;
+            }
         }
     }
 }

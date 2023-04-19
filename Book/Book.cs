@@ -36,11 +36,7 @@
 
             set
             {
-                if (!IsbnValidator.IsValid(value))
-                {
-                    throw new FormatException(message: "Invalid ISBN format");
-                }
-
+                IsbnValidator.Validate(value);
                 _ISBN = value;
             }
         }
@@ -132,6 +128,16 @@
 
                 _cost = value;
             }
+        }
+
+        public override string ToString()
+        {
+            return "ISBN: " + ISBN.ToString() +
+                " Author: " + Author.ToString() +
+                " Publishing House: " + PublishingHouse.ToString() + 
+                " Publishing Year: " + PublishingYear.ToString() + 
+                " Pages: " + Pages.ToString() + 
+                " Cost: " + Cost.ToString();
         }
     }
 }

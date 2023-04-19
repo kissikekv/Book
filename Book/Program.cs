@@ -11,11 +11,11 @@ namespace Book
             try
             {
                 book.ISBN = "978-5-699-12014-7";
-                book.Author = "фывфыв";
-                book.PublishingHouse = "saaasa";
+                book.Author = "Gandon";
+                book.PublishingHouse = "Charlie Hebdo";
                 book.Cost = 1.0M;
-                book.PublishingYear = 100;
-                book.Pages = 123;
+                book.PublishingYear = 2001;
+                book.Pages = 1488;
             }
             
             catch (FormatException ex)
@@ -38,6 +38,7 @@ namespace Book
                 Console.WriteLine(ex.Message);
             }
 
+            Console.WriteLine(book.ToString());
             /*почему перед ArgumentOutOfRangeException и ArgumentNullException не может стоять 
             ArgumentNullException????*/
             //ловить исключения try catch
