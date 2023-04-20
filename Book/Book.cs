@@ -140,13 +140,10 @@
 
         public override bool Equals(object? obj)
         { 
-            return obj is Book book &&                   
-                   ISBN == book.ISBN &&
-                   Author == book.Author &&
-                   PublishingHouse == book.PublishingHouse &&
-                   PublishingYear == book.PublishingYear &&
-                   Pages == book.Pages &&
-                   Cost == book.Cost;
+            return obj is Book book &&
+                   obj != this &&
+                   obj != null &&
+                   Equals(obj);
         }
 
         public override int GetHashCode()
@@ -162,7 +159,7 @@
         }
 
         public bool Equals(Book? other)
-        {
+        {            
             return other != null && 
                    ISBN == other.ISBN &&
                    Author == other.Author &&
