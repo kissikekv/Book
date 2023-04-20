@@ -1,6 +1,6 @@
 ﻿namespace Book
 {
-    internal class Book
+    internal class Book : IEquatable<Book>
     {
         private string _ISBN;
         private string _author;
@@ -159,6 +159,17 @@
             hash.Add(Pages);
             hash.Add(Cost);
             return hash.ToHashCode();
+        }
+
+        public bool Equals(Book? other)
+        {
+            return other != null && 
+                   ISBN == other.ISBN &&
+                   Author == other.Author &&
+                   PublishingHouse == other.PublishingHouse &&
+                   PublishingYear == other.PublishingYear &&
+                   Pages == other.Pages &&
+                   Cost == other.Cost;
         }
     }
 }
