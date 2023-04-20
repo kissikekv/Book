@@ -15,8 +15,8 @@ namespace Book
         public static void Main(string[] args)
         {
             Book book = new Book("978-5-699-12014-7", "Gandon", "Charlie Hebdo", 2001, 1488, 1.0M);
-            Book book1 = new Book("978-5-699-12014-7", "Gandon", "Charlie Hebdo", 2001, 1488, 1.0M);
-            Book book2 = new Book("978-5-699-12014-7", "Gandon", "Charlie Hebdo", 2001, 1488, 1.0M);
+            Book book1 = new Book("978-5-699-12014-7", "DickHead", "Charlie Hebdo", 2001, 1488, 1.0M);
+            Book book2 = new Book("978-5-699-12014-7", "Pedik", "Charlie Hebdo", 2001, 1488, 1.0M);
 
             try
             {

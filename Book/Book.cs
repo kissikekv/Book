@@ -140,8 +140,8 @@
 
         public override bool Equals(object? obj)
         { 
-            return obj != null &&
-                   obj == this &&
+            return obj == this &&
+                   obj != null &&                   
                    obj is Book book &&
                    Equals(obj);
         }
