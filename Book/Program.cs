@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Security.Cryptography.X509Certificates;
+
 
 namespace Book
 {
@@ -9,14 +11,26 @@ namespace Book
         public class TestBook
         {
             public int Id { get; set; }
-            public string Name { get; set; }
-
+            public string Name { get; set; }            
         }
         public static void Main(string[] args)
         {
-            Book book = new Book("978-5-699-12014-7", "Gandon", "Charlie Hebdo", 2001, 1488, 1.0M);
-            Book book1 = new Book("978-5-699-12014-7", "DickHead", "Charlie Hebdo", 2001, 1488, 1.0M);
-            Book book2 = new Book("978-5-699-12014-7", "Pedik", "Charlie Hebdo", 2001, 1488, 1.0M);
+            Book book = new Book("978-5-699-12014-8", "Gandon", "Charlie Hebdo", 2001, 1488, 1.0M);
+            Book book1 = new Book("978-5-699-12014-7", "DickHead", "Charlie Hebdo", 2001, 1337, 1.0M);
+            Book book2 = new Book("978-5-699-12014-7", "Pedik", "Charlie Hebdo", 2001, 2012, 1.0M);
+
+            List<Book> list = new List<Book>();
+
+            list.Add(book);
+            list.Add(book1);
+            list.Add(book2);
+
+            list.Sort();
+
+            foreach (Book i in list)
+            {
+                Console.WriteLine(i.Author);
+            }
 
             try
             {
@@ -64,8 +78,8 @@ namespace Book
             Console.WriteLine(book1.Equals(null));
 
             Console.WriteLine($"Any non-null value isn't equal to null {book1.Equals(testBook)}");
-
-
+            
+            Console.WriteLine(book.CompareTo(book));
         }
     }
 }

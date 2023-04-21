@@ -1,14 +1,14 @@
 ﻿namespace Book
 {
-    internal class Book : IEquatable<Book>
+    internal class Book : IEquatable<Book>, IComparable, IComparable<Book>
     {
         private string _ISBN;
         private string _author;
         private string _publishingHouse;
         private int _publishingYear;
         private int _pages;
-        private decimal _cost;              
-        
+        private decimal _cost;
+
         public Book(
             string isbn,
             string author,
@@ -132,23 +132,23 @@
         {
             return "ISBN: " + ISBN.ToString() +
                 " Author: " + Author.ToString() +
-                " Publishing House: " + PublishingHouse.ToString() + 
-                " Publishing Year: " + PublishingYear.ToString() + 
-                " Pages: " + Pages.ToString() + 
+                " Publishing House: " + PublishingHouse.ToString() +
+                " Publishing Year: " + PublishingYear.ToString() +
+                " Pages: " + Pages.ToString() +
                 " Cost: " + Cost.ToString();
         }
 
         public override bool Equals(object? obj)
-        { 
+        {
             return obj == this &&
-                   obj != null &&                   
+                   obj != null &&
                    obj is Book book &&
-                   Equals(obj);
+                   Equals(book);
         }
 
         public override int GetHashCode()
         {
-            HashCode hash = new HashCode();            
+            HashCode hash = new HashCode();
             hash.Add(ISBN);
             hash.Add(Author);
             hash.Add(PublishingHouse);
@@ -159,14 +159,50 @@
         }
 
         public bool Equals(Book? other)
-        {            
-            return other != null && 
-                   ISBN == other.ISBN &&
-                   Author == other.Author &&
-                   PublishingHouse == other.PublishingHouse &&
-                   PublishingYear == other.PublishingYear &&
-                   Pages == other.Pages &&
-                   Cost == other.Cost;
+        {
+            if (other == this) return true;
+            if (other == null) return false;
+            return ISBN == other.ISBN &&
+            Author == other.Author &&
+            PublishingHouse == other.PublishingHouse &&
+            PublishingYear == other.PublishingYear &&
+            Pages == other.Pages &&
+            Cost == other.Cost;
+        }
+
+        public int CompareTo(Book? other)
+        {
+            if (other == this)
+            {
+                return 0;
+            }
+
+            if (other == null)
+            {
+                return -1;
+            }
+
+            return ISBN.CompareTo(other.ISBN);
+        }
+
+        public int CompareTo(object? obj)
+        {
+            if (obj == this)
+            {
+                return 0;
+            }
+
+            if (obj == null)
+            {
+                return -1;
+            }
+
+            if (obj is Book book)
+            {
+                return this.ISBN.CompareTo(book);
+            }
+
+            throw new ArgumentException(nameof(book));
         }
     }
 }
