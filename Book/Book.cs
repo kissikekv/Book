@@ -140,8 +140,8 @@
 
         public override bool Equals(object? obj)
         {
-            return obj == this &&
-                   obj != null &&
+            return object.ReferenceEquals(obj, this) &&
+                   object.ReferenceEquals(obj, null) &&
                    obj is Book book &&
                    Equals(book);
         }
@@ -160,8 +160,8 @@
 
         public bool Equals(Book? other)
         {
-            if (other == this) return true;
-            if (other == null) return false;
+            if (object.ReferenceEquals(other, this)) return true;
+            if (object.ReferenceEquals(other, null)) return false;
             return ISBN == other.ISBN &&
             Author == other.Author &&
             PublishingHouse == other.PublishingHouse &&
@@ -224,5 +224,14 @@
         {
             return left.CompareTo(right) >= 0;
         }
+
+        public static bool operator ==(Book left, Book right)
+        {
+            return left.Equals(right);
+        }
+         public static bool operator != (Book left, Book right)
+         {
+            return !(left == right);
+         }
     }
 }

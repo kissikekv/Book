@@ -89,7 +89,9 @@ namespace Book
             Console.WriteLine($" left >= right {book1 >= book}");
             Console.WriteLine($" left < right {book1 < book}");
             Console.WriteLine($" left <= right {book1 <= book}");
-            Console.WriteLine("---------------------------------");            
+            Console.WriteLine("---------------------------------"); 
+            Console.WriteLine($" left == right {book1 == book}");
+            Console.WriteLine($" left != right {book1 != book}");
         }
     }
 }
