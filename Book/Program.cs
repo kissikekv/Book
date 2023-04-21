@@ -78,8 +78,18 @@ namespace Book
             Console.WriteLine(book1.Equals(null));
 
             Console.WriteLine($"Any non-null value isn't equal to null {book1.Equals(testBook)}");
-            
-            Console.WriteLine(book.CompareTo(book));
+                    
+            //book > book1(left > right)
+            Console.WriteLine($" left > right {book > book1}");
+            Console.WriteLine($" left >= right {book >= book1}");
+            Console.WriteLine($" left < right {book < book1}");
+            Console.WriteLine($" left <= right {book <= book1}");
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine($" left > right {book1 > book}");
+            Console.WriteLine($" left >= right {book1 >= book}");
+            Console.WriteLine($" left < right {book1 < book}");
+            Console.WriteLine($" left <= right {book1 <= book}");
+            Console.WriteLine("---------------------------------");            
         }
     }
 }

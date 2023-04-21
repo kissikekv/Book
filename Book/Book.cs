@@ -204,5 +204,25 @@
 
             throw new ArgumentException(nameof(book));
         }
+
+        public static bool operator <(Book left, Book right)
+        {
+            return left.CompareTo(right) < 0;
+        }
+
+        public static bool operator <=(Book left, Book right)
+        {
+            return left.CompareTo(right) <= 0;
+        }
+
+        public static bool operator >(Book left, Book right)
+        {
+            return left.CompareTo(right) > 0;
+        }
+
+        public static bool operator >=(Book left, Book right)
+        {
+            return left.CompareTo(right) >= 0;
+        }
     }
 }
