@@ -232,6 +232,7 @@ namespace Book
         {
             return left.Equals(right);
         }
+
         public static bool operator != (Book left, Book right)
         {
            return !(left == right);
@@ -267,6 +268,7 @@ namespace Book
                     throw new FormatException(String.Format("format is not spported", format));
             }
         }
+
 
     }
 }
