@@ -1,6 +1,9 @@
-﻿namespace Book
+﻿
+using System.Globalization;
+
+namespace Book
 {
-    internal class Book : IEquatable<Book>, IComparable, IComparable<Book>
+    internal class Book : IEquatable<Book>, IComparable, IComparable<Book>, IFormattable
     {
         private string _ISBN;
         private string _author;
@@ -234,6 +237,36 @@
            return !(left == right);
         }
 
+        public string ToString(string? format, IFormatProvider? formatProvider)
+        {
+            if (String.IsNullOrEmpty(format))
+            {
+                format = "1";
+            }
+
+            if (ReferenceEquals(format, null))
+            {
+                formatProvider = CultureInfo.CurrentCulture;
+            }
+
+            switch (format.ToUpperInvariant())
+            {
+                case "1":
+                    return Cost.ToString("F1", formatProvider);
+                case "2":
+                    return Cost.ToString("F2", formatProvider);
+                case "3":
+                    return Cost.ToString("F3", formatProvider);
+                case "4":
+                    return Cost.ToString("F4", formatProvider);
+                case "PPP":
+                    return "PublishingYear: " + PublishingYear.ToString() +
+                           " PublishingHouse: "+ PublishingHouse.ToString() + 
+                           " Pages: " + Pages.ToString();
+                default:
+                    throw new FormatException(String.Format("format is not spported", format));
+            }
+        }
 
     }
 }
