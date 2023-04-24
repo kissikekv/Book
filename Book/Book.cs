@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Book
 {
-    internal class Book : IEquatable<Book>, IComparable, IComparable<Book>, IFormattable
+    internal class Book : IEquatable<Book>, IComparable, IComparable<Book>, IFormattable, IBookstorage
     {
         private string _ISBN;
         private string _author;
@@ -268,6 +268,7 @@ namespace Book
                     throw new FormatException(String.Format("format is not spported", format));
             }
         }
+
 
 
     }

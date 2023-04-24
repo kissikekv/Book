@@ -4,8 +4,6 @@ using System.Data;
 using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
 
-
-
 namespace Book
 {
     class Program
