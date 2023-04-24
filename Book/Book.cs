@@ -206,7 +206,7 @@ namespace Book
             }
 
             throw new ArgumentException(nameof(book));
-        }                    
+        }
 
         public static bool operator <(Book left, Book right)
         {
@@ -233,9 +233,9 @@ namespace Book
             return left.Equals(right);
         }
 
-        public static bool operator != (Book left, Book right)
+        public static bool operator !=(Book left, Book right)
         {
-           return !(left == right);
+            return !(left == right);
         }
 
         public string ToString(string? format, IFormatProvider? formatProvider)
@@ -262,14 +262,48 @@ namespace Book
                     return Cost.ToString("F4", formatProvider);
                 case "PPP":
                     return "PublishingYear: " + PublishingYear.ToString() +
-                           " PublishingHouse: "+ PublishingHouse.ToString() + 
+                           " PublishingHouse: " + PublishingHouse.ToString() +
                            " Pages: " + Pages.ToString();
                 default:
                     throw new FormatException(String.Format("format is not spported", format));
             }
         }
 
+        public void AddBook()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveBook()
+        {
+            throw new NotImplementedException();
+        }
+
+        public object FindBookByTag(string? tag, Book book, Book list)
+        {
+            if (string.IsNullOrEmpty(tag))
+            {
+                throw new ArgumentNullException(nameof(tag));
+            }
+
+            if (book.Equals(null))
+            {
+                throw new ArgumentNullException(nameof(book));
+            }
+
+            switch (tag)
+            {
+                case "ISBN":
+                    foreach(Book item in list)
+
+            }
 
 
+        }
+
+        public void SortBookByTag()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
