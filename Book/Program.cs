@@ -92,6 +92,13 @@ namespace Book
             Console.WriteLine("---------------------------------"); 
             Console.WriteLine($" left == right {book1 == book}");
             Console.WriteLine($" left != right {book1 != book}");
+            NumberFormatInfo current = NumberFormatInfo.CurrentInfo;
+            Console.WriteLine("the number in quotes means the number of characters after the decimal point");
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine(book1.ToString("1", current));
+            Console.WriteLine(book1.ToString("2", current));
+            Console.WriteLine(book1.ToString("3", current));
+            Console.WriteLine(book1.ToString("4", current));
         }
     }
 }
