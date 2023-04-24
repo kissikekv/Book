@@ -172,12 +172,12 @@
 
         public int CompareTo(Book? other)
         {
-            if (other == this)
+            if (object.ReferenceEquals(other, this))
             {
                 return 0;
             }
 
-            if (other == null)
+            if (object.ReferenceEquals(other, null))
             {
                 return -1;
             }
@@ -187,12 +187,12 @@
 
         public int CompareTo(object? obj)
         {
-            if (obj == this)
+            if (object.ReferenceEquals(obj, this))
             {
                 return 0;
             }
 
-            if (obj == null)
+            if (object.ReferenceEquals(obj, null))
             {
                 return -1;
             }
@@ -203,7 +203,7 @@
             }
 
             throw new ArgumentException(nameof(book));
-        }
+        }                    
 
         public static bool operator <(Book left, Book right)
         {
@@ -229,9 +229,11 @@
         {
             return left.Equals(right);
         }
-         public static bool operator != (Book left, Book right)
-         {
-            return !(left == right);
-         }
+        public static bool operator != (Book left, Book right)
+        {
+           return !(left == right);
+        }
+
+
     }
 }
