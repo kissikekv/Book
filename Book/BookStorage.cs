@@ -3,54 +3,72 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Book.Exceptions;
 
 namespace Book
 {
-    internal class BookStogare
+    internal class BookInMemoryListStogare
     {
-        //интерфейс IBookStorage
-        private List<Book> _list;
-        public List<Book> List
+        private readonly List<Book> _books = new List<Book>();
+
+        public void AddBook(Book? book)
         {
-            get
+            if (ReferenceEquals(book, null))
             {
-                return _list;
+                throw new ArgumentNullException(nameof(book));
             }
-            set
+
+            if (ReferenceEquals(FindBookByISBN(book.ISBN), default))
             {
-                _list = value;
+                _books.Add(book);
+                return;
             }
+
+            throw new BookAlreadyExistException();
         }
 
-        private void Create()
+        public Book? FindBookByISBN(string? isbn)
         {
-            List<Book> list = new List<Book>();
-            List = list;
-        }
-
-        public void RemoveBook(Book book)
-        {
-            foreach (Book item in List)
+            foreach (Book book in _books)
             {
-                if (item.Equals(book))
+                if (book.ISBN == isbn)
                 {
-                    List.Remove(item);
+                    return book;
+                }
+            }
+
+            return default;
+        }
+
+        public void DeleteBook(string? isbn)
+        {
+            var book = FindBookByISBN(isbn);
+
+            if (ReferenceEquals(book, null))
+            {
+                return;
+            }
+
+            _books.Remove(book);
+        }
+
+        public void Update(Book? book)
+        {
+            if (ReferenceEquals(book, null))
+            {
+                throw new ArgumentNullException(nameof(book));
+            }
+
+            for (int i = 0; i < _books.Count; i++)
+            {
+                if (_books[i].ISBN == book.ISBN)
+                {
+                    _books[i] = book;
                     return;
                 }
             }
-        }
 
-        public void FindBookByTeg(Book book)
-        {
-            foreach (Book item in List)
-            {
-                Console.WriteLine(item.ToString());
-            }
-        }
-
-        public void AddBook(Book book)
-        {
-            List.Add(book);
+            throw new BookNotFoundException();
         }
     }
 }

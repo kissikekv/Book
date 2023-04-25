@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Book
 {
-    internal class Book : IEquatable<Book>, IComparable, IComparable<Book>, IFormattable, IBookstorage
+    internal class Book : IEquatable<Book>, IComparable, IComparable<Book>, IFormattable
     {
         private string _ISBN;
         private string _author;
@@ -267,43 +267,6 @@ namespace Book
                 default:
                     throw new FormatException(String.Format("format is not spported", format));
             }
-        }
-
-        public void AddBook()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveBook()
-        {
-            throw new NotImplementedException();
-        }
-
-        public object FindBookByTag(string? tag, Book book, Book list)
-        {
-            if (string.IsNullOrEmpty(tag))
-            {
-                throw new ArgumentNullException(nameof(tag));
-            }
-
-            if (book.Equals(null))
-            {
-                throw new ArgumentNullException(nameof(book));
-            }
-
-            switch (tag)
-            {
-                case "ISBN":
-                    
-
-            }
-
-
-        }
-
-        public void SortBookByTag()
-        {
-            throw new NotImplementedException();
-        }
+        }        
     }
 }

@@ -100,7 +100,18 @@ namespace Book
             Console.WriteLine(book1.ToString("3", current));
             Console.WriteLine(book1.ToString("4", current));
             Console.WriteLine(book1.ToString("PPP", current));
-             Console.WriteLine(book1.ToString("ppp", current));
+            Console.WriteLine(book1.ToString("ppp", current));
+
+            var bookStorage = new BookInMemoryListStogare();
+
+            bookStorage.AddBook(book1);
+            bookStorage.AddBook(book2);
+            
+            Console.WriteLine(bookStorage.FindBookByISBN("978-5-699-12014-7")?.ToString());
+            Console.WriteLine("---------------------------------");
+            bookStorage.Update(book2);
+            Console.WriteLine(bookStorage.FindBookByISBN("978-5-699-12014-7")?.ToString());
+            Console.WriteLine("---------------------------------");            
         }
     }
 }
