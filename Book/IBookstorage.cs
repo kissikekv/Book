@@ -7,8 +7,7 @@ public interface IBookstorage
 {
     public void AddBook();
     
-    public void RemoveBook();
-    
+    public void RemoveBook();    
 
     public object FindBookByTag();
 

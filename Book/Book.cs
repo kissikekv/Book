@@ -294,7 +294,7 @@ namespace Book
             switch (tag)
             {
                 case "ISBN":
-                    foreach(Book item in list)
+                    
 
             }
 
