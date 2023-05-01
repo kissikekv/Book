@@ -26,7 +26,7 @@ namespace Book
             Pages = pages;
             Cost = cost;
         }
-
+                
         public string ISBN
         {
             get
