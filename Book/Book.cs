@@ -36,7 +36,7 @@ namespace Book
 
             set
             {
-                IsbnValidator.Validate(value);
+                Validator.ValidateISBN(value);
                 _ISBN = value;
             }
         }

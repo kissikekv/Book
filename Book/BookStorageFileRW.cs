@@ -11,17 +11,17 @@ namespace Book
 {
     internal class BookStorageFileRW
     {
-        private string _path;   
+        private string _path;
 
         public BookStorageFileRW(string path)
         {
-            _path = path;  //валидотор пути          
-        }        
+            Validator.ValidateFilePath(path);
+            _path = path;       
+        }
 
         public void AddBook(Book? book)
         {
-            ValidateBookForNull(book);
-
+            Validator.ValidateBookForNull(book);
             using (var writer = new BinaryWriter(File.Open(_path, FileMode.Append)))
             {
                 writer.Write(book.ISBN);
@@ -67,16 +67,16 @@ namespace Book
 
         public void DeleteBook(string? isbn)
         {
-            List<Book> bookList = ReadBooks();                        
+            List<Book> bookList = ReadBooks();
             var bookForDelete = bookList.FirstOrDefault(book => book.ISBN == isbn);
-            ValidateBookForNull(bookForDelete);
+            Validator.ValidateBookForNull(bookForDelete);
             bookList.Remove(bookForDelete);
             RewriteFileWith(bookList);
         }
 
         public void Update(Book? book)
         {
-            ValidateBookForNull(book);
+            Validator.ValidateBookForNull(book);
             List<Book> bookList = ReadBooks();
             for (int i = 0; i < bookList.Count; i++)
             {
@@ -88,15 +88,7 @@ namespace Book
             }
 
             RewriteFileWith(bookList);
-        }
-
-        private static void ValidateBookForNull(Book? book)
-        {
-            if (ReferenceEquals(book, null))
-            {
-                throw new ArgumentNullException(nameof(book));
-            }
-        }
+        }        
 
         private void RewriteFileWith(List<Book> bookList)
         {
@@ -108,7 +100,7 @@ namespace Book
         }
 
         private List<Book> ReadBooks()
-        {    
+        {
             List<Book> bookList = new List<Book>();
 
             using (var reader = new BinaryReader(File.Open(_path, FileMode.Open)))
