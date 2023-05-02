@@ -26,7 +26,7 @@ namespace Book
 
             list.Sort();
                      
-            BookStorageFileRW bookStorageFileRW = new BookStorageFileRW();
+            BookStorageFileRW bookStorageFileRW = new BookStorageFileRW("E:\\EduBlya\\file.dat");
 
             bookStorageFileRW.AddBook(book);
             bookStorageFileRW.AddBook(book1);
