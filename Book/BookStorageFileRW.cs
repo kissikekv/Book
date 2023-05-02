@@ -11,109 +11,16 @@ namespace Book
 {
     internal class BookStorageFileRW
     {
-        private string _path = "E:\\EduBlya\\file.dat";
-        List<Book> _bookList = new List<Book>();
+        private string _path;   
 
-        public void AddBook(Book? book)
+        public BookStorageFileRW(string path)
         {
-            if (ReferenceEquals(book, null))
-            {
-                throw new ArgumentNullException(nameof(book));
-            }
-
-            using (BinaryWriter writer = new BinaryWriter(File.Open(_path, FileMode.Append)))
-            {
-                writer.Write(book.ISBN);
-                writer.Write(book.Author);
-                writer.Write(book.PublishingHouse);
-                writer.Write(book.PublishingYear);
-                writer.Write(book.Pages);
-                writer.Write(book.Cost);
-            }
+            _path = path;  //валидотор пути          
         }
 
-        public Book? FindBookByISBN(string? isbn)
-        {
-            using (var reader = new BinaryReader(File.Open(_path, FileMode.Open)))
-            {
-                if (reader.PeekChar() == -1)
-                {
-                    throw new ArgumentException(nameof(reader));
-                }
-
-                while (reader.PeekChar() > -1)
-                {
-                    if (reader.ReadString() == isbn)
-                    {
-                        var book = new Book(
-                        isbn,
-                        reader.ReadString(),
-                        reader.ReadString(),
-                        reader.ReadInt32(),
-                        reader.ReadInt32(),
-                        reader.ReadDecimal());
-                        return book;
-                    }
-
-                    reader.ReadString();
-                    reader.ReadString();
-                    reader.ReadInt32();
-                    reader.ReadInt32();
-                    reader.ReadDecimal();
-                }
-
-                return default;
-            }
-        }
-
-        public void DeleteBook(string? isbn)
-        {
-            using (var reader = new BinaryReader(File.Open(_path, FileMode.Open)))
-            {
-                while (reader.PeekChar() > -1)
-                {
-                    Book book = new Book(
-                    reader.ReadString(),
-                    reader.ReadString(),
-                    reader.ReadString(),
-                    reader.ReadInt32(),
-                    reader.ReadInt32(),
-                    reader.ReadDecimal());
-                    _bookList.Add(book);
-                }
-            }
-
-            var bookForDelete = FindBookByISBN(isbn);
-
-            if (ReferenceEquals(bookForDelete, null))
-            {
-                return;
-            }
-
-            _bookList.Remove(bookForDelete);
-
-            using (FileStream fileStream = new FileStream(_path, FileMode.OpenOrCreate))
-            {
-                lock (fileStream)
-                {
-                    fileStream.SetLength(0);
-                }
-            }
-
-            foreach (Book book in _bookList)
-            {
-                AddBook(book);
-            }
-
-            _bookList.Clear();
-        }
-
-        public void Update(Book? book)
-        {
-            if (ReferenceEquals(book, null))
-            {
-                throw new ArgumentNullException(nameof(book));
-            }
+        public List<Book> BooksFromFile()
+        {    
+            List<Book> bookList = new List<Book>();
 
             using (var reader = new BinaryReader(File.Open(_path, FileMode.Open)))
             {
@@ -126,33 +33,108 @@ namespace Book
                     reader.ReadInt32(),
                     reader.ReadInt32(),
                     reader.ReadDecimal());
-                    _bookList.Add(book1);
+                    bookList.Add(book1);
                 }
-            }            
+            }
 
-            for (int i = 0; i < _bookList.Count; i++)
+            return bookList;
+        }
+
+        public void AddBook(Book? book)
+        {
+            if (ReferenceEquals(book, null))
             {
-                if (_bookList[i].ISBN == book.ISBN)
+                throw new ArgumentNullException(nameof(book));
+            }
+
+            using (var writer = new BinaryWriter(File.Open(_path, FileMode.Append)))
+            {
+                writer.Write(book.ISBN);
+                writer.Write(book.Author);
+                writer.Write(book.PublishingHouse);
+                writer.Write(book.PublishingYear);
+                writer.Write(book.Pages);
+                writer.Write(book.Cost);
+            }
+        }
+
+        public Book? FindBookByISBN(string? isbn)
+        {
+            if (!File.Exists(_path))
+            {
+                return default;
+            }
+
+            using (var reader = new BinaryReader(File.Open(_path, FileMode.Open)))
+            {
+                while (reader.PeekChar() > -1)
                 {
-                    _bookList[i] = book;
+                    var tempIsbn = reader.ReadString();
+                    var tempAuthor = reader.ReadString();
+                    var tempPublishingHouse = reader.ReadString();
+                    var tempPublishingYear = reader.ReadInt32();
+                    var tempPages = reader.ReadInt32();
+                    var tempCost = reader.ReadDecimal();
+
+                    if (tempIsbn == isbn)
+                    {
+                        return new Book(tempIsbn,
+                            tempAuthor,
+                            tempPublishingHouse,
+                            tempPublishingYear,
+                            tempPages,
+                            tempCost);
+                    }
+                }
+                return default;
+            }
+        }
+
+        public void DeleteBook(string? isbn)
+        {
+            List<Book> bookList = BooksFromFile();
+                        
+            var bookForDelete = bookList.FirstOrDefault(book => book.ISBN == isbn);
+
+            if (ReferenceEquals(bookForDelete, null))
+            {
+                return;
+            }
+
+            bookList.Remove(bookForDelete);
+
+            File.Delete(_path);
+
+            foreach (Book book in bookList)
+            {
+                AddBook(book);
+            }
+        }
+
+        public void Update(Book? book)
+        {
+            if (ReferenceEquals(book, null))
+            {
+                throw new ArgumentNullException(nameof(book));
+            }
+
+            List<Book> bookList = BooksFromFile();
+
+            for (int i = 0; i < bookList.Count; i++)
+            {
+                if (bookList[i].ISBN == book.ISBN)
+                {
+                    bookList[i] = book;
                     break;
                 }
             }
 
-            using (FileStream fileStream = new FileStream(_path, FileMode.OpenOrCreate))
-            {
-                lock (fileStream)
-                {
-                    fileStream.SetLength(0);
-                }
-            }
+            File.Delete(_path);
 
-            foreach (Book item in _bookList)
+            foreach (Book item in bookList)
             {
                 AddBook(item);
             }
-
-            _bookList.Clear();
         }
     }
 }
