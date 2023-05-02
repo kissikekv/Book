@@ -16,36 +16,11 @@ namespace Book
         public BookStorageFileRW(string path)
         {
             _path = path;  //валидотор пути          
-        }
-
-        public List<Book> BooksFromFile()
-        {    
-            List<Book> bookList = new List<Book>();
-
-            using (var reader = new BinaryReader(File.Open(_path, FileMode.Open)))
-            {
-                while (reader.PeekChar() > -1)
-                {
-                    Book book1 = new Book(
-                    reader.ReadString(),
-                    reader.ReadString(),
-                    reader.ReadString(),
-                    reader.ReadInt32(),
-                    reader.ReadInt32(),
-                    reader.ReadDecimal());
-                    bookList.Add(book1);
-                }
-            }
-
-            return bookList;
-        }
+        }        
 
         public void AddBook(Book? book)
         {
-            if (ReferenceEquals(book, null))
-            {
-                throw new ArgumentNullException(nameof(book));
-            }
+            ValidateBookForNull(book);
 
             using (var writer = new BinaryWriter(File.Open(_path, FileMode.Append)))
             {
@@ -92,34 +67,17 @@ namespace Book
 
         public void DeleteBook(string? isbn)
         {
-            List<Book> bookList = BooksFromFile();
-                        
+            List<Book> bookList = ReadBooks();                        
             var bookForDelete = bookList.FirstOrDefault(book => book.ISBN == isbn);
-
-            if (ReferenceEquals(bookForDelete, null))
-            {
-                return;
-            }
-
+            ValidateBookForNull(bookForDelete);
             bookList.Remove(bookForDelete);
-
-            File.Delete(_path);
-
-            foreach (Book book in bookList)
-            {
-                AddBook(book);
-            }
+            RewriteFileWith(bookList);
         }
 
         public void Update(Book? book)
         {
-            if (ReferenceEquals(book, null))
-            {
-                throw new ArgumentNullException(nameof(book));
-            }
-
-            List<Book> bookList = BooksFromFile();
-
+            ValidateBookForNull(book);
+            List<Book> bookList = ReadBooks();
             for (int i = 0; i < bookList.Count; i++)
             {
                 if (bookList[i].ISBN == book.ISBN)
@@ -129,12 +87,46 @@ namespace Book
                 }
             }
 
-            File.Delete(_path);
+            RewriteFileWith(bookList);
+        }
 
+        private static void ValidateBookForNull(Book? book)
+        {
+            if (ReferenceEquals(book, null))
+            {
+                throw new ArgumentNullException(nameof(book));
+            }
+        }
+
+        private void RewriteFileWith(List<Book> bookList)
+        {
+            File.Delete(_path);
             foreach (Book item in bookList)
             {
                 AddBook(item);
             }
+        }
+
+        private List<Book> ReadBooks()
+        {    
+            List<Book> bookList = new List<Book>();
+
+            using (var reader = new BinaryReader(File.Open(_path, FileMode.Open)))
+            {
+                while (reader.PeekChar() > -1)
+                {
+                    Book book1 = new Book(
+                    reader.ReadString(),
+                    reader.ReadString(),
+                    reader.ReadString(),
+                    reader.ReadInt32(),
+                    reader.ReadInt32(),
+                    reader.ReadDecimal());
+                    bookList.Add(book1);
+                }
+            }
+
+            return bookList;
         }
     }
 }
