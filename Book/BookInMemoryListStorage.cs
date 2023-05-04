@@ -8,10 +8,7 @@ namespace Book
 
         public void AddBook(Book? book)
         {
-            if (ReferenceEquals(book, null))
-            {
-                throw new ArgumentNullException(nameof(book));
-            }
+            Validator.ValidateBookForNull(book);
 
             if (ReferenceEquals(FindBookByISBN(book.ISBN), default))
             {

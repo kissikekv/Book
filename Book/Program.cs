@@ -26,15 +26,12 @@ namespace Book
 
             list.Sort();
                      
-            BookStorageFileRW bookStorageFileRW = new BookStorageFileRW("E:\\EduBlya\\file.dat");
-
-            bookStorageFileRW.AddBook(book);
-            bookStorageFileRW.AddBook(book1);
-            bookStorageFileRW.AddBook(book2);
-            bookStorageFileRW.DeleteBook("978-5-699-12014-8");
-            bookStorageFileRW.Update(book2);
+            BookListStorageFromCSV listStorageFromCSV = new BookListStorageFromCSV("E:\\EduBlya\\filecsv.csv");
             
-            
+            listStorageFromCSV.AddBook(book);
+            listStorageFromCSV.AddBook(book1);
+            listStorageFromCSV.AddBook(book2);
+            listStorageFromCSV.DeleteBook("978-5-699-12014-8");                  
         }
     }
 }
