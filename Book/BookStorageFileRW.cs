@@ -69,7 +69,10 @@ namespace Book
         {
             List<Book> bookList = ReadBooks();
             var bookForDelete = bookList.FirstOrDefault(book => book.ISBN == isbn);
-            Validator.ValidateBookForNull(bookForDelete);
+            if (ReferenceEquals(bookForDelete, null))
+            {
+                return;
+            }
             bookList.Remove(bookForDelete);
             RewriteFileWith(bookList);
         }

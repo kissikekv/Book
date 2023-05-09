@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Formats.Asn1;
-using System.Linq;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Book
+﻿namespace Book
 {
     internal class BookListStorageFromCSV
     {
-        private string _path;
+        private readonly string _path;
 
         public BookListStorageFromCSV(string path)
         {
@@ -18,10 +10,10 @@ namespace Book
             _path = path;
         }
 
-        public void AddBook(Book book, bool append = true)
+        public void AddBook(Book book)
         {
             Validator.ValidateBookForNull(book);
-            using (StreamWriter stwriter = new StreamWriter(_path, append))
+            using (StreamWriter stwriter = new StreamWriter(_path, true))
             {
                 stwriter.WriteLine(book.ISBN);
                 stwriter.WriteLine(book.Author);
@@ -30,7 +22,6 @@ namespace Book
                 stwriter.WriteLine(book.Pages);
                 stwriter.WriteLine(book.Cost);
             }
-
         }
 
         public Book? FindBookByISBN(string isbn)
@@ -42,7 +33,7 @@ namespace Book
 
             using (StreamReader sreader = new StreamReader(_path))
             {
-                while (sreader.ReadLine() != null)
+                while (!sreader.EndOfStream)
                 {
                     var tempIsbn = sreader.ReadLine();
                     var tempAuthor = sreader.ReadLine();
@@ -69,7 +60,10 @@ namespace Book
         {
             List<Book> bookList = ReadBooks();
             var bookForDelete = bookList.FirstOrDefault(book => book.ISBN == isbn);
-            Validator.ValidateBookForNull(bookForDelete);
+            if (ReferenceEquals(bookForDelete, null))
+            {
+                return;
+            }
             bookList.Remove(bookForDelete);
             RewriteFileWith(bookList);
         }
@@ -95,7 +89,7 @@ namespace Book
             File.Delete(_path);
             foreach (Book item in bookList)
             {
-                AddBook(item, true);
+                AddBook(item);
             }
         }
 
@@ -105,15 +99,15 @@ namespace Book
 
             using (StreamReader sreader = new StreamReader(_path))
             {
-                while (sreader.ReadLine() != null)
-                {
-                    Book book1 = new Book(
-                    sreader.ReadLine(),
-                    sreader.ReadLine(),
-                    sreader.ReadLine(),
-                    Convert.ToInt32(sreader.ReadLine()),
-                    Convert.ToInt32(sreader.ReadLine()),
-                    Convert.ToDecimal(sreader.ReadLine()));
+                while (!sreader.EndOfStream)
+                {                    
+                    Book book1 = new Book(sreader.ReadLine(),
+                            sreader.ReadLine(),
+                            sreader.ReadLine(),
+                            Convert.ToInt32( sreader.ReadLine()),
+                            Convert.ToInt32(sreader.ReadLine()),
+                            Convert.ToDecimal(sreader.ReadLine())
+                    );
                     bookList.Add(book1);
                 }
             }
