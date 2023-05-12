@@ -2,7 +2,7 @@
 
 namespace Book
 {
-    internal class Book : IEquatable<Book>, IComparable, IComparable<Book>, IFormattable
+    public class Book : IEquatable<Book>, IComparable, IComparable<Book>, IFormattable
     {
         private string _ISBN;
         private string _author;

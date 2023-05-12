@@ -28,7 +28,7 @@
                 case "1":                    
                     return new BookInMemoryListStogare();                    
                 case "2":
-                    return new BookListStorageFromCSV("csvstorage.csv");                    
+                    return new BookListStorageFromCSV("jopa.csv");                    
                 case "3":
                     return new BookStorageFileRW("binarystorage.dat");                    
                 default:
