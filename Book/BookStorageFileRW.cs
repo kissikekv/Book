@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Reflection.PortableExecutable;
-using Book.Exceptions;
-
-namespace Book
+﻿namespace Book
 {
-    internal class BookStorageFileRW
+    internal class BookStorageFileRW : IStorage
     {
         private string _path;
 

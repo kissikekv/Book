@@ -1,6 +1,6 @@
 ﻿namespace Book
 {
-    internal class BookListStorageFromCSV
+    internal class BookListStorageFromCSV : IStorage
     {
         private readonly string _path;
 

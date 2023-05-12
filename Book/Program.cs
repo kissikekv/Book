@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace Book
+﻿namespace Book
 {
     class Program
     {
@@ -9,40 +7,33 @@ namespace Book
             Book book = new Book("978-5-699-12014-8", "Gandon", "Charlie Hebdo", 2001, 1488, 1.0M);
             Book book1 = new Book("978-5-699-12014-7", "DickHead", "Charlie Hebdo", 2001, 1337, 1.0M);
             Book book2 = new Book("978-5-699-12014-7", "Pedik", "Charlie Hebdo", 2001, 2012, 1.0M);
+            
+            string tempISBN = book1.ISBN;
 
             Console.WriteLine("enter smth");
 
-            string someString = Console.ReadLine();
+            string? someString = Console.ReadLine();
+                     
+            var storage = CreateStorage(someString);  
 
+            storage.AddBook(book);
+            storage.AddBook(book1);
+            storage.AddBook(book2);            
+        }
+
+        public static IStorage CreateStorage(string? someString)
+        {
             switch (someString)
             {
-                case "1":
-                    someString = "BookInMemoryListStorage.cs";
-                    break;
+                case "1":                    
+                    return new BookInMemoryListStogare();                    
                 case "2":
-                    someString = "BookListStorageFromCSV.cs";
-                    break;
+                    return new BookListStorageFromCSV("csvstorage.csv");                    
                 case "3":
-                    someString = "BookStorageFileRW.cs";
-                    break;
+                    return new BookStorageFileRW("binarystorage.dat");                    
                 default:
-                    Console.WriteLine();
-                    break;
-            }
-
-            Assembly asm = Assembly.LoadFrom("Book.dll");
-            Type? type = asm.GetType(someString);
-
-            if (type.Equals(null))
-            {
-                MethodInfo? FindBookByISBN = type.GetMethod("FindBookByISBN", BindingFlags.Public | BindingFlags.Instance);
-                object? result = FindBookByISBN?.Invoke(null, null);
-                Console.WriteLine(result);
-            }
-            else 
-            {
-                throw new ArgumentNullException();
-            }
+                    throw new ArgumentOutOfRangeException(nameof(someString));                    
+            }            
         }
     }
 }
