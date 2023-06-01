@@ -12,7 +12,7 @@ namespace BookTests
         private Book.Book testBook = new Book.Book("978-5-699-12014-8", "Gandon", "Charlie Hebdo", 2001, 1488, 1.0M);
 
         [TearDown]
-        public void DeleteData()
+        public void Delete_Data()
         {
             File.Delete(path);
         }
