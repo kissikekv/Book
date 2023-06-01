@@ -9,9 +9,20 @@ namespace BookTests
     public class Tests
     {
         const string path = "E:\\EduBlya\\filecsv.csv";        
-        const string firstTestIsbn = "978-5-699-12014-8";
-        const string secondTestIsbn = "978-5-699-12014-7";
-        private Book.Book testBook = new Book.Book(firstTestIsbn, "Gandon", "Charlie Hebdo", 2001, 1488, 1.0M);
+        const string firstTestIsbn = "978-5-699-12014-8"; //почему если поставить private, то выдаёт ошибку
+        const string secondTestIsbn = "978-5-699-12014-7"; //
+        private Book.Book firstTestBook = new Book.Book(firstTestIsbn,
+            "Gandon",
+            "Charlie Hebdo",
+            2001,
+            1488,
+            1.0M);
+        private Book.Book secondTestBook = new Book.Book(secondTestIsbn,
+            "Huilo",
+            "Jopa",
+            2002,
+            1337,
+            1.3M);
 
         [TearDown]
         public void DeleteData()
@@ -24,7 +35,7 @@ namespace BookTests
         {
             var bookStorageCSV = new BookListStorageFromCSV(path); 
 
-            bookStorageCSV.AddBook(testBook);
+            bookStorageCSV.AddBook(firstTestBook);
             string? fileContent = File.ReadAllText(path);
 
             Assert.IsFalse(string.IsNullOrEmpty(fileContent)); 
@@ -36,10 +47,10 @@ namespace BookTests
         {
             var bookStorageCSV = new BookListStorageFromCSV(path);            
 
-            bookStorageCSV.AddBook(testBook);
+            bookStorageCSV.AddBook(firstTestBook);
             Book.Book? bookForSearch = bookStorageCSV.FindBookByISBN(ISBN);
 
-            Assert.That(expectation, Is.EqualTo(testBook.Equals(bookForSearch)));
+            Assert.That(expectation, Is.EqualTo(firstTestBook.Equals(bookForSearch)));
         }
 
         [TestCase(firstTestIsbn)]
@@ -47,7 +58,12 @@ namespace BookTests
         public void Delete_OneBook_StorageDeleted(string ISBN)
         {
             var bookStorageCSV = new BookListStorageFromCSV(path);            
-            var book = new Book.Book(ISBN, "Gandon", "Charlie Hebdo", 2001, 1488, 1.0M);
+            var book = new Book.Book(ISBN,
+                firstTestBook.Author,
+                firstTestBook.PublishingHouse,
+                firstTestBook.PublishingYear,
+                firstTestBook.Pages,
+                firstTestBook.Cost);            
 
             bookStorageCSV.AddBook(book);
             bookStorageCSV.DeleteBook(ISBN);
@@ -59,10 +75,9 @@ namespace BookTests
         public void Delete_OneBook_BookIsDeleted()
         {
             var bookStorageCSV = new BookListStorageFromCSV(path);           
-            var book1 = new Book.Book(secondTestIsbn, "Gandon", "Charlie Hebdo", 2001, 1488, 1.0M);
-
-            bookStorageCSV.AddBook(testBook);
-            bookStorageCSV.AddBook(book1);
+                       
+            bookStorageCSV.AddBook(firstTestBook);
+            bookStorageCSV.AddBook(secondTestBook);
             bookStorageCSV.DeleteBook(firstTestIsbn);
 
             Assert.IsTrue(File.Exists(path));
@@ -75,24 +90,11 @@ namespace BookTests
             var bookStorageCSV = new BookListStorageFromCSV(path);            
             var book1 = new Book.Book(firstTestIsbn, "Gandon", "Charlie Hebdo", 2001, 1488, 1.0M);
 
-            bookStorageCSV.AddBook(testBook);
+            bookStorageCSV.AddBook(firstTestBook);
             bookStorageCSV.Update(book1);
 
-            Assert.That(true, Is.Not.EqualTo(Equals(bookStorageCSV.FindBookByISBN(firstTestIsbn), testBook)));
+            Assert.That(true, Is.Not.EqualTo(Equals(bookStorageCSV.FindBookByISBN(firstTestIsbn), firstTestBook)));
         }
-
-        [Test]
-        public void Update_OneBook_ReturnStorageWithoutSameBook()
-        {
-            var bookStorageCSV = new BookListStorageFromCSV(path);                        
-            var book1 = new Book.Book(firstTestIsbn, "Gandon", "Charlie Hebdo", 2001, 1488, 1.0M);
-            var book2 = new Book.Book(secondTestIsbn, "Huilo", "Jopa", 2002, 1337, 1.3M);
-
-            bookStorageCSV.AddBook(testBook);
-            bookStorageCSV.AddBook(book2);
-            bookStorageCSV.Update(book1);
-
-            Assert.That(true, Is.Not.EqualTo(Equals(bookStorageCSV.FindBookByISBN(firstTestIsbn), testBook)));
-        } 
+        
     }
 }

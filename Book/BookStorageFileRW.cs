@@ -1,6 +1,6 @@
 ﻿namespace Book
 {
-    internal class BookStorageFileRW : IStorage
+    public class BookStorageFileRW : IStorage
     {
         private string _path;
 

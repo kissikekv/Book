@@ -2,7 +2,7 @@
 
 namespace Book
 {
-    internal class BookInMemoryListStogare : IStorage
+    public class BookInMemoryListStogare : IStorage
     {
         private readonly List<Book> _books = new List<Book>();
 

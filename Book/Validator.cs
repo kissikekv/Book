@@ -2,7 +2,7 @@
 
 namespace Book
 {
-    internal static class Validator
+    public class Validator
     {
         public static void ValidateISBN(string isbn)
         {

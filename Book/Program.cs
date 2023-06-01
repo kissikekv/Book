@@ -1,4 +1,6 @@
-﻿namespace Book
+﻿using System.Threading.Channels;
+
+namespace Book
 {
     class Program
     {
@@ -20,7 +22,7 @@
             storage.AddBook(book1);
             storage.AddBook(book2);            
         }
-
+                
         public static IStorage CreateStorage(string? someString)
         {
             switch (someString)

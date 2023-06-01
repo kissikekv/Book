@@ -1,6 +1,6 @@
 ﻿namespace Book
 {
-    internal class BookListStorageFromCSV : IStorage
+    public class BookListStorageFromCSV : IStorage
     {
         private readonly string _path;
 
@@ -100,11 +100,11 @@
             using (StreamReader sreader = new StreamReader(_path))
             {
                 while (!sreader.EndOfStream)
-                {                    
+                {
                     Book book1 = new Book(sreader.ReadLine(),
                             sreader.ReadLine(),
                             sreader.ReadLine(),
-                            Convert.ToInt32( sreader.ReadLine()),
+                            Convert.ToInt32(sreader.ReadLine()),
                             Convert.ToInt32(sreader.ReadLine()),
                             Convert.ToDecimal(sreader.ReadLine())
                     );
